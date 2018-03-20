@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: f487a3b1ee1f3f7428312c555c405195
+timeCreated: 1520345822
+licenseType: Free
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: .VnBahamasB
+  fontNames:
+  - .VnBahamasB
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
