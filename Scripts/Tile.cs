@@ -32,6 +32,8 @@ public class Tile : MonoBehaviour
                 ApplyStyle(4, number);
             else if (number >= 432)
                 ApplyStyle(5, number);
+            else if (number == 0)
+                ApplyStyle(6, number);
         
         }
     }
@@ -81,11 +83,15 @@ public class Tile : MonoBehaviour
 
     void ApplyStyleFromHolder(int index, int number)
     {
-        TileText.text = number.ToString();
-        TileText.color = TileStyleHolder.instance.TileStyles[index].TextColor;
+        if (number > 0)
+        {
+            TileText.text = number.ToString();
+            TileText.color = TileStyleHolder.instance.TileStyles[index].TextColor;
+        }
         TileImage.color = TileStyleHolder.instance.TileStyles[index].TileColor;
         TileImage.sprite = TileStyleHolder.instance.TileStyles[index].image;
     }
+
 
     void ApplyStyle(int index, int number)
     {
@@ -109,7 +115,9 @@ public class Tile : MonoBehaviour
             case 5:
                 ApplyStyleFromHolder(5, number);
                 break;
-            
+            case 6:
+                ApplyStyleFromHolder(6, number);
+                break;
             default:
                 Debug.LogError("Check the number that you pass to ApplyStyle");
                 break;
@@ -120,7 +128,7 @@ public class Tile : MonoBehaviour
     private void SetVisible()
     {
         TileImage.enabled = true;
-        if (TileImage.color == new Color32(250, 250, 251, 255) || Number >= 432)
+        if (TileImage.color == new Color32(250, 250, 251, 255) || Number >= 432 || Number == 0 || TileImage.color == new Color32(252, 252, 252, 252))
             TileText.enabled = false;
         else
             TileText.enabled = true;

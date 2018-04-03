@@ -43,11 +43,12 @@ public class GameManager : MonoBehaviour
         Tile[] AllTilesOneDim = GameObject.FindObjectsOfType<Tile>();
         foreach (Tile t in AllTilesOneDim)
         {
-
+            int temp;
             Tweener tweener = TileScaleDown(t);
             tweener.OnComplete(() =>
             {
-                t.Number = Generate();   //sinh ra mot so ngau nhien
+                while ((temp = Generate()) == 0);
+                t.Number = temp;   //sinh ra mot so ngau nhien
                 TileAppear(t);
             });
             
@@ -92,8 +93,10 @@ public class GameManager : MonoBehaviour
         {
             LastClickTime = Time.time;
 
-            if (AllTiles[x, y].TileImage.color == new Color32(250, 250, 251, 255) && ((x < 4 &&AllTiles[x, y].TileImage.color == AllTiles[x + 1, y].TileImage.color) || (x > 0 && AllTiles[x, y].TileImage.color == AllTiles[x - 1, y].TileImage.color )|| (y < 4 && AllTiles[x, y].TileImage.color == AllTiles[x, y + 1].TileImage.color) || ( y > 0 && AllTiles[x, y].TileImage.color == AllTiles[x, y - 1].TileImage.color)))
+            if (AllTiles[x, y].TileImage.color == new Color32(250, 250, 251, 255) && ((x < 4 && AllTiles[x, y].TileImage.color == AllTiles[x + 1, y].TileImage.color) || (x > 0 && AllTiles[x, y].TileImage.color == AllTiles[x - 1, y].TileImage.color) || (y < 4 && AllTiles[x, y].TileImage.color == AllTiles[x, y + 1].TileImage.color) || (y > 0 && AllTiles[x, y].TileImage.color == AllTiles[x, y - 1].TileImage.color)))
                 StartCoroutine(SpecialTileInteract(x, y));
+            else if (AllTiles[x, y].TileImage.color == new Color32(252, 252, 252, 252))
+                TileVibrant(x, y);
             else
                 StartCoroutine(MakeTileInteract(x, y));
         }
@@ -380,13 +383,15 @@ public class GameManager : MonoBehaviour
     int Generate()
     {
 
-        int randomNum = Random.Range(0, 10);
-        if (randomNum > 8)
+        int randomNum = Random.Range(0, 25);
+        if (randomNum > 20)
             return 12;
-        else if (randomNum > 5)
+        else if (randomNum > 10)
             return 4;
-        else
+        else if (randomNum > 0)
             return 1;
+        else
+            return 0;
     }
 
      bool CanMove()
@@ -416,7 +421,9 @@ public class GameManager : MonoBehaviour
             return false;
         else if (y == colums.Count - 1 && x > 0 && x < colums.Count - 1 && AllTiles[x, y].TileImage.color != AllTiles[x, y - 1].TileImage.color && AllTiles[x, y].TileImage.color != AllTiles[x + 1, y].TileImage.color && AllTiles[x, y].TileImage.color != AllTiles[x - 1, y].TileImage.color)
             return false;
-        else if (x > 0 && y > 0 && x < colums.Count - 1 && y < colums.Count - 1 && AllTiles[x,y].TileImage.color != AllTiles[x, y - 1].TileImage.color && AllTiles[x, y].TileImage.color != AllTiles[x, y + 1].TileImage.color && AllTiles[x, y].TileImage.color != AllTiles[x + 1, y].TileImage.color && AllTiles[x, y].TileImage.color != AllTiles[x - 1, y].TileImage.color)
+        else if (x > 0 && y > 0 && x < colums.Count - 1 && y < colums.Count - 1 && AllTiles[x, y].TileImage.color != AllTiles[x, y - 1].TileImage.color && AllTiles[x, y].TileImage.color != AllTiles[x, y + 1].TileImage.color && AllTiles[x, y].TileImage.color != AllTiles[x + 1, y].TileImage.color && AllTiles[x, y].TileImage.color != AllTiles[x - 1, y].TileImage.color)
+            return false;
+        else if (AllTiles[x, y].TileImage.color == new Color32(252, 252, 252, 252))
             return false;
 
         return true;

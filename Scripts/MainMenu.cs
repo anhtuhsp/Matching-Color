@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Prime31.TransitionKit;
 
 public class MainMenu : MonoBehaviour {
 
@@ -13,7 +14,14 @@ public class MainMenu : MonoBehaviour {
 
     public void PlayGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        var ripple = new RippleTransition()
+        {
+            nextScene = 5,
+            duration = 10.0f,
+            amplitude = 1500f,
+            speed = 20f
+        };
+        TransitionKit.instance.transitionWithDelegate(ripple);
     }   
 
     public void HighScoreOnClick()
