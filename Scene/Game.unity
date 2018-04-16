@@ -2160,7 +2160,7 @@ MonoBehaviour:
   - image: {fileID: 21300000, guid: fed6e5baf358ab84a9f511982a5fb2f9, type: 3}
     TileColor:
       serializedVersion: 2
-      rgba: 4294901502
+      rgba: 4294835709
     TextColor:
       serializedVersion: 2
       rgba: 4294967295

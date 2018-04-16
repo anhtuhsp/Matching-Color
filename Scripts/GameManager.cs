@@ -86,6 +86,11 @@ public class GameManager : MonoBehaviour
 
     void HandleTileClicked(int x, int y)
     {
+
+        if (!CanMove())
+        {
+            GameOver();
+        }
         Debug.Log("Hit Tile " + x + "," + y + " " + CanClick);
 
 
@@ -99,11 +104,9 @@ public class GameManager : MonoBehaviour
                 TileVibrant(x, y);
             else
                 StartCoroutine(MakeTileInteract(x, y));
+
+          
         }
-
-        if (!CanMove())
-            GameOver();
-
 
     }
 //Animation
@@ -146,7 +149,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator Waiting()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(2f);
     }
     
     Tweener TileDestroySpecial(int x, int y)
