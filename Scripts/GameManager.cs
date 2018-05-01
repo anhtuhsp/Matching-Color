@@ -67,9 +67,28 @@ public class GameManager : MonoBehaviour
 
     private void GameOver()
     {
+        string username;
+        int score;
         State = GameState.GameOver;
         GameOverScoreText.text = ScoreTracker.Instance.Score.ToString();
+
+        username = PlayerPrefs.GetString("UserName");
+        score = PlayerPrefs.GetInt("HighScore");
+        StartCoroutine(updateScore(username, score));
+
         GameOverPanel.SetActive(true);
+    }
+
+    IEnumerator updateScore(string username, int score)
+    {
+        string CreateUserURL = "http://clickmebabyhedspi.tk/AndroidCode/UpdateScore.php";
+
+        WWWForm form = new WWWForm();
+        form.AddField("usernamePOST", username);
+        form.AddField("scorePOST", score);
+
+        WWW www = new WWW(CreateUserURL, form);
+        yield return www;
     }
 
     public void GamePause()

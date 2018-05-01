@@ -13,29 +13,25 @@ public class LoginDB : MonoBehaviour {
     private string username;
     private string password;
     private string inform;
-    string CreateURL = "http://localhost/acount/Login.php";
+    string CreateURL = "http://clickmebabyhedspi.tk/AndroidCode/Login.php";
 
+    ChangeScene change = new ChangeScene();
     // Use this for initialization
     void Start () {
 		
 	}
 	
-    public void LoginOnClick()
+    public void loginButtonOnClick()
     {
         StartCoroutine(LoginToDB(username, password));
-        if(inform == "Login sucess")
-        {
-            PlayerPrefs.SetString("Username_now", username);
-            SceneManager.LoadScene("Menu");
-        }
     }
 
-    public void BackButton()
+    public void backButtonOnClick()
     {
         SceneManager.LoadScene("Menu");
     }
 
-    public void ToRegister()
+    public void registerButtonOnClick()
     {
         SceneManager.LoadScene("Register");
     }
@@ -53,6 +49,18 @@ public class LoginDB : MonoBehaviour {
         form.AddField("passwordPOST", password);
         WWW www = new WWW(CreateURL, form);
         yield return www;
-        inform = www.text;
+        if (www.text != "Failed")
+        {
+            string textStream = www.text;
+            string[] entries = textStream.Split(new char[] { '|' });
+            int score = int.Parse(entries[1]);
+            PlayerPrefs.SetString("UserName", entries[0]);
+            PlayerPrefs.SetInt("HighScore", score);
+            change.BackToMenu(); 
+        }
+        else
+        {
+            SceneManager.LoadScene("LoginFail");
+        }
     }
 }

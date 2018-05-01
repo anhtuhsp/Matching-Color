@@ -7,12 +7,19 @@ using Prime31.TransitionKit;
 
 public class MainMenu : MonoBehaviour {
 
+    public Text username;
+
     public void Start()
     {
-
+        username.text = PlayerPrefs.GetString("UserName");
     }
 
-    public void PlayGame()
+    public void Awake()
+    {
+       
+    }
+
+    public void playButtonOnClick()
     {
         var ripple = new RippleTransition()
         {
@@ -24,21 +31,26 @@ public class MainMenu : MonoBehaviour {
         TransitionKit.instance.transitionWithDelegate(ripple);
     }   
 
-    public void HighScoreOnClick()
+    public void highscoreButtonOnClick()
     {
         SceneManager.LoadScene("HighScore");
     }
 
-
-    public void QuitGame()
+    public void optionsButtonOnClick()
     {
+        SceneManager.LoadScene("Option");
+    }
+
+    public void quitButtonOnClick()
+    {
+        PlayerPrefs.DeleteAll();
         Debug.Log("Quit!");
         Application.Quit();
     }
 
-    public void LogIn()
+    public void loginButtonOnClick()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
+        SceneManager.LoadScene("LogIn");
     }
 
 }

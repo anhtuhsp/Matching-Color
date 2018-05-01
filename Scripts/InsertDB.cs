@@ -16,13 +16,14 @@ public class InsertDB : MonoBehaviour {
     private string inputConfirm;
     private string inform;
 
-    string CreateUserURL = "http://localhost/acount/InsertAccount.php";
+    ChangeScene change = new ChangeScene();
+    string CreateUserURL = "http://clickmebabyhedspi.tk/AndroidCode/InsertAccount.php";
     // Use this for initialization
     void Start () {
 		
 	}
 	
-    public void BackButton()
+    public void backButtonOnClick()
     {
         SceneManager.LoadScene("LogIn");
     }
@@ -36,27 +37,28 @@ public class InsertDB : MonoBehaviour {
 
     IEnumerator CreateUser(string username, string password)
     {
-        WWWForm form = new WWWForm();
-        form.AddField("usernamePOST", username);
-        form.AddField("passwordPOST", password);
+        if (inputUsername != "" && inputConfirm == inputPassword)
+        {
+            WWWForm form = new WWWForm();
+            form.AddField("usernamePOST", username);
+            form.AddField("passwordPOST", password);
 
-        WWW www = new WWW(CreateUserURL, form);
-        yield return www;
-        if(www.text == "Sucess")
-        {
-            SceneManager.LoadScene("LogIn");
+            WWW www = new WWW(CreateUserURL, form);
+            yield return www;
+            if (www.text == "Sucess")
+            {
+                change.LogIn();
+            }
+            else SceneManager.LoadScene("RegisterFail");
         }
-        else
-        {
-            Debug.Log("This Username has been taken.");
-        }
+        else SceneManager.LoadScene("RegisterFail");
     }
 
-    public void CreateOnClick()
+    public void createOnClick()
     {
         if (inputConfirm != inputPassword)
         {
-            Debug.Log("Password does not match.");
+            SceneManager.LoadScene("RegisterFail");
         }
         else
         {
